@@ -2,7 +2,7 @@ package eu.diversit.sbt.plugin
 
 import org.scalatest.{OptionValues, FeatureSpec}
 import org.scalatest.matchers.ShouldMatchers
-import eu.diversit.sbt.plugin.WebDavPlugin.MkCol
+import com.github.tototoshi.sbt.automkcol.Plugin.MkCol
 import sbt.{DirectCredentials, Credentials, JavaNet1Repository, MavenRepository}
 import sbt.std.Streams
 import com.typesafe.config.ConfigFactory
@@ -32,7 +32,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
   // Validate real values are set. If not, put a 'test.conf' file in classpath.
   username should not startWith("fill")
 
-  import StringPath._
+  import com.github.tototoshi.sbt.automkcol.StringPath._
   val IVY_STYLE = false
   val NO_CROSS_PATHS = false
   val WITH_CROSS_PATHS = true
