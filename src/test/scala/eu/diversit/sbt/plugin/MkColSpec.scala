@@ -225,7 +225,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, SBT_PLUGIN)
 
       import com.googlecode.sardine._
-      val sardine = SardineFactory.begin()
+      val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2_0.12/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10_0.12/1.0.1") should be(true)
 
@@ -240,7 +240,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, NOT_SBT_PLUGIN)
 
       import com.googlecode.sardine._
-      val sardine = SardineFactory.begin()
+      val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10/1.0.1") should be(true)
 
@@ -255,7 +255,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2"), "0.12.2", NO_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, SBT_PLUGIN)
 
       import com.googlecode.sardine._
-      val sardine = SardineFactory.begin()
+      val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase/1.0.1") should be(true)
 
       val sardine2 = SardineFactory.begin(username, password)
@@ -269,7 +269,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2"), "0.12.2", NO_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, NOT_SBT_PLUGIN)
 
       import com.googlecode.sardine._
-      val sardine = SardineFactory.begin()
+      val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase/1.0.1") should be(true)
 
       val sardine2 = SardineFactory.begin(username, password)
@@ -283,7 +283,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, IVY_STYLE, SBT_PLUGIN)
 
       import com.googlecode.sardine._
-      val sardine = SardineFactory.begin()
+      val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2_0.12/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10_0.12/1.0.1") should be(true)
 
@@ -298,7 +298,7 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, IVY_STYLE, NOT_SBT_PLUGIN)
 
       import com.googlecode.sardine._
-      val sardine = SardineFactory.begin()
+      val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10/1.0.1") should be(true)
 
