@@ -3,6 +3,7 @@ package com.github.tototoshi.sbt.automkcol
 import sbt._
 import com.googlecode.sardine.{SardineFactory, Sardine}
 import std.TaskStreams
+import scala.language.postfixOps
 
 object Plugin extends sbt.Plugin {
 
@@ -157,8 +158,8 @@ object Plugin extends sbt.Plugin {
   object AutoMkcol extends MkCol with AutoMkcolKeys {
     import sbt.Keys._
     val globalSettings = Seq(
-      mkcol <<= (organization, name, version, crossScalaVersions, sbtVersion, crossPaths, publishTo, credentials, streams, publishMavenStyle, sbtPlugin) map mkcolAction,
-      publish <<= publish.dependsOn(mkcol)
+      mkcol := { mkcolAction(organization.value, name.value, version.value, crossScalaVersions.value, sbtVersion.value, crossPaths.value, publishTo.value, credentials.value, streams.value, publishMavenStyle.value, sbtPlugin.value) },
+      publish := { publish.dependsOn(mkcol).value }
     )
 
     val scopedSettings = inConfig(autoMkcol)(globalSettings)

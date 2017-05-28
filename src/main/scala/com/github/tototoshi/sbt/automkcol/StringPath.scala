@@ -1,5 +1,7 @@
 package com.github.tototoshi.sbt.automkcol
 
+import scala.language.implicitConversions
+
 /**
  * Convenience class to be able to write a String with '/' in code.
  */

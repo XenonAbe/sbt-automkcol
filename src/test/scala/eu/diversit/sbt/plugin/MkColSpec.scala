@@ -1,9 +1,8 @@
 package eu.diversit.sbt.plugin
 
-import org.scalatest.{OptionValues, FeatureSpec}
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{FeatureSpec, Matchers, OptionValues}
 import com.github.tototoshi.sbt.automkcol.Plugin.MkCol
-import sbt.{DirectCredentials, Credentials, JavaNet1Repository, MavenRepository}
+import sbt.{Credentials, DirectCredentials, MavenRepository, Resolver}
 import sbt.std.Streams
 import com.typesafe.config.ConfigFactory
 import java.net.URL
@@ -26,7 +25,7 @@ trait TestLogger {
 /**
  * Test mkcol action.
  */
-class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with TestLogger
+class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLogger
         with MkCol with WebDavConfig {
 
   // Validate real values are set. If not, put a 'test.conf' file in classpath.
@@ -143,7 +142,8 @@ class MkColSpec extends FeatureSpec with ShouldMatchers with OptionValues with T
     }
 
     scenario("Maven root should return None if resolver not Maven Repo") {
-      mavenRoot(Some(JavaNet1Repository)) should be(None)
+      val resolver = Some(Resolver.url("some", new URL("http://some.url/")))
+      mavenRoot(resolver) should be(None)
     }
 
     scenario("Make collection should throw exception when urlRoot does not exist") {
