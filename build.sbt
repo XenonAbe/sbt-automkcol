@@ -9,7 +9,7 @@ version := "1.6.0-SNAPSHOT"
 libraryDependencies ++= Seq(
     "com.googlecode.sardine" % "sardine" % "146",
     "org.scalatest" %% "scalatest" % "3.0.3" % "test",
-    "com.typesafe"  % "config" % "1.0.0" % "test"
+    "com.typesafe"  % "config" % "1.3.1" % "test"
 )
 
 publishMavenStyle := true
