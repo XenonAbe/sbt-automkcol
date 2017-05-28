@@ -14,6 +14,6 @@ libraryDependencies ++= Seq(
 
 publishMavenStyle := true
 
-//publishTo <<= version { (v: String) => _publishTo(v) }
+publishTo := Some(Resolver.file("file", new File("./docs")))
 
 publishArtifact in Test := false
