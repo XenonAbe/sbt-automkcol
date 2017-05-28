@@ -1,7 +1,7 @@
 package com.github.tototoshi.sbt.automkcol
 
 import sbt._
-import com.googlecode.sardine.{SardineFactory, Sardine}
+import com.github.sardine.{SardineFactory, Sardine}
 import std.TaskStreams
 import scala.language.postfixOps
 

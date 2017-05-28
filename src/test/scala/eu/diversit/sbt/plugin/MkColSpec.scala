@@ -122,7 +122,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
     }
 
     scenario("Exists should return true for existing urls") {
-      import com.googlecode.sardine._
+      import com.github.sardine._
 
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "de") should be(true)
@@ -130,7 +130,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
     }
 
     scenario("Exists should return false for non existing urls (and not throw Exception)") {
-      import com.googlecode.sardine._
+      import com.github.sardine._
 
       val sardine = SardineFactory.begin()
       exists(sardine, "https://fake.url/not-exist") should be(false)
@@ -147,7 +147,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
     }
 
     scenario("Make collection should throw exception when urlRoot does not exist") {
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
 
       intercept[MkColException] {
@@ -197,7 +197,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
     }
 
     scenario("Make collection (single level) should create only one directory") {
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
 
       mkcol(sardine, webdavUrl, List("testing"), testLogger)
@@ -207,7 +207,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
     }
 
     scenario("Make collection (multi level) should create only all directories") {
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
 
       mkcol(sardine, webdavUrl, List("testing","testing/123","testing/123/456"), testLogger)
@@ -224,7 +224,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, SBT_PLUGIN)
 
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2_0.12/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10_0.12/1.0.1") should be(true)
@@ -239,7 +239,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, NOT_SBT_PLUGIN)
 
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10/1.0.1") should be(true)
@@ -254,7 +254,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2"), "0.12.2", NO_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, SBT_PLUGIN)
 
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase/1.0.1") should be(true)
 
@@ -268,7 +268,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2"), "0.12.2", NO_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, NOT_SBT_PLUGIN)
 
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase/1.0.1") should be(true)
 
@@ -282,7 +282,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, IVY_STYLE, SBT_PLUGIN)
 
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2_0.12/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10_0.12/1.0.1") should be(true)
@@ -297,7 +297,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, IVY_STYLE, NOT_SBT_PLUGIN)
 
-      import com.googlecode.sardine._
+      import com.github.sardine._
       val sardine = SardineFactory.begin(username, password)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.9.2/1.0.1") should be(true)
       exists(sardine, webdavUrl / "test/org/case/testcase_2.10/1.0.1") should be(true)
