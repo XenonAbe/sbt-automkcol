@@ -4,7 +4,7 @@ organization := "com.github.xenonabe"
 
 name := "sbt-automkcol"
 
-version := "1.6.0-SNAPSHOT"
+version := "1.6.0"
 
 libraryDependencies ++= Seq(
     "com.github.lookfirst" % "sardine" % "5.7",

@@ -22,7 +22,9 @@ It will only create the collections which do not exist yet.
 
 To use the plugin, add these lines to your _project/plugins.sbt_ or to the global _.sbt/plugins/build.sbt_:
 
-    addSbtPlugin("com.github.tototoshi" % "sbt-automkcol" % "1.5.1")
+    resolvers += "Maven Repository on Github" at "http://xenonabe.github.io/sbt-automkcol/"
+
+    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.0")
 
 In your project's _build.sbt_
 Add to the top of your project's _build.sbt_:
@@ -144,6 +146,7 @@ The '[MKCOL][2]' command is currently the only WebDav command which is implement
 
 ## Versions
 
+*   1.6.0 Fix test failed. Upgrade dependency libraries
 *   1.5.1 Support 2.11.x
 *   1.5   Rename com.github.tototoshi.sbt.automkcol.WebDavPlugin To com.github.tototoshi.sbt.automkcol.Plugin
 *   1.4   Fork and rename to sbt-automkcol
@@ -158,6 +161,10 @@ Thanks for their contribution:
 
 *   [jplikesbikes][5] for crossPath support.
 *   Flanker_9 for raising the Ivy issue.
+
+
+
+
 
 [1]: http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png
 [2]: http://www.webdav.org/specs/rfc2518.html#METHOD_MKCOL
