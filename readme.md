@@ -22,9 +22,9 @@ It will only create the collections which do not exist yet.
 
 To use the plugin, add these lines to your _project/plugins.sbt_ or to the global _.sbt/plugins/build.sbt_:
 
-    resolvers += "Maven Repository on Github" at "http://xenonabe.github.io/sbt-automkcol/"
+    resolvers += "Maven Repository on Github" at "https://xenonabe.github.io/sbt-automkcol/"
 
-    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.1")
+    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.3")
 
 In your project's _build.sbt_
 Add to the top of your project's _build.sbt_:

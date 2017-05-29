@@ -12,8 +12,6 @@ libraryDependencies ++= Seq(
     "com.typesafe"  % "config" % "1.3.1" % "test"
 )
 
-sbtPlugin := true
-
 publishMavenStyle := true
 
 publishTo := Some(Resolver.file("file", new File("./docs")))
