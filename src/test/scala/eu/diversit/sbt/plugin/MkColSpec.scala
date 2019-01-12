@@ -4,21 +4,25 @@ import org.scalatest.{FeatureSpec, Matchers, OptionValues}
 import com.github.tototoshi.sbt.automkcol.Plugin.MkCol
 import sbt.{Credentials, DirectCredentials, MavenRepository, Resolver}
 import sbt.std.Streams
+import sbt.internal.util.ManagedLogger
 import com.typesafe.config.ConfigFactory
 import java.net.URL
+
+import sjsonnew.shaded.scalajson.ast.unsafe.JValue
+import sjsonnew.support.scalajson.unsafe.Converter
 
 /**
  * A sbt.Logger implementation for testing.
  */
 trait TestLogger {
 
-  val testLogger = new sbt.Logger {
-    def trace(t: => Throwable) { println(t.getMessage) }
+  val testLogger = new ManagedLogger("", None, None, null) {
+    override def trace(t: => Throwable) { println(t.getMessage) }
 
-    def success(message: => String) { println(message) }
+    override def success(message: => String) { println(message) }
 
     import sbt.Level
-    def log(level: Level.Value, message: => String) { println("%s: %s" format (level, message))}
+    override def log(level: Level.Value, message: => String) { println("%s: %s" format (level, message))}
   }
 }
 
@@ -40,6 +44,12 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
   val SBT_PLUGIN = true
 
   feature("WebDav Make Collection") {
+    implicit val isoString: sjsonnew.IsoString[JValue] =
+      sjsonnew.IsoString.iso(
+        sjsonnew.support.scalajson.unsafe.CompactPrinter.apply,
+        sjsonnew.support.scalajson.unsafe.Parser.parseUnsafe
+      )
+
     scenario("Create artifact paths should not include sbt version for normal (non-sbt-plugin) projects") {
       // With cross paths
       val paths = createPaths("com.organization", "name", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, MAVEN_STYLE, NOT_SBT_PLUGIN)
@@ -169,7 +179,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
         Credentials("realm2", "host2.name", "user", "pwd"))
 
       val resolver = Some(MavenRepository("releases", "http://host2.name/"))
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
 
       val foundCredentials = getCredentialsForHost(resolver, credentials, streams)
       foundCredentials should not be(None)
@@ -186,7 +196,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
         Credentials("realm2", "host2.name", "user", "pwd"))
 
       val resolver = Some(MavenRepository("releases", "http://some-repo.for.test/"))
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
 
       val foundCredentials = getCredentialsForHost(resolver, credentials, streams)
       foundCredentials should not be(None)
@@ -220,7 +230,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should create folders for sbt-plugin with all crossScalaVersions") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, SBT_PLUGIN)
 
@@ -235,7 +245,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should create folderswith all crossScalaVersions") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, NOT_SBT_PLUGIN)
 
@@ -250,7 +260,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should create folder for java artifact of sbt-plugin (crossPaths == false)") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2"), "0.12.2", NO_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, SBT_PLUGIN)
 
@@ -264,7 +274,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should create folder for java artifact (crossPaths == false)") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2"), "0.12.2", NO_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, MAVEN_STYLE, NOT_SBT_PLUGIN)
 
@@ -278,7 +288,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should create correct folder structure for Ivy sbt-plugin project (publishMavenStyle = false)") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, IVY_STYLE, SBT_PLUGIN)
 
@@ -293,7 +303,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should create correct folder structure for Ivy project (publishMavenStyle = false)") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", host, username, password))
       mkcolAction("test.org.case", "testcase", "1.0.1", Seq("2.9.2", "2.10.0"), "0.12.2", WITH_CROSS_PATHS, Some(MavenRepository("releases", webdavUrl)), credentials, streams, IVY_STYLE, NOT_SBT_PLUGIN)
 
@@ -308,7 +318,7 @@ class MkColSpec extends FeatureSpec with Matchers with OptionValues with TestLog
 
     scenario("mkcolAction should throw exception when no credentials available") {
       import java.io.File
-      val streams = Streams[String]((_) => new File("target"), (_) => "Test", (_,_) => testLogger)("Test")
+      val streams = Streams[String, JValue]((_) => new File("target"), (_) => "Test", (_,_) => testLogger, Converter).apply("Test")
       val credentials = Seq(Credentials("realm", "dummy.url", "user", "pwd"))
 
       intercept[MkColException] {
