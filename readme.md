@@ -24,7 +24,7 @@ To use the plugin, add these lines to your _project/plugins.sbt_ or to the globa
 
     resolvers += "Maven Repository on Github" at "https://xenonabe.github.io/sbt-automkcol/"
 
-    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.3")
+    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.4")
 
 In your project's _build.sbt_
 Add to the top of your project's _build.sbt_:
@@ -146,6 +146,7 @@ The '[MKCOL][2]' command is currently the only WebDav command which is implement
 
 ## Versions
 
+*   1.6.4 Corresponding to multiple sbt versions
 *   1.6.0 Fix test failed. Upgrade dependency libraries
 *   1.5.1 Support 2.11.x
 *   1.5   Rename com.github.tototoshi.sbt.automkcol.WebDavPlugin To com.github.tototoshi.sbt.automkcol.Plugin
