@@ -6,6 +6,8 @@ name := "sbt-automkcol"
 
 version := "1.6.4-SNAPSHOT"
 
+crossSbtVersions := Seq("0.13.17", "1.2.8")
+
 libraryDependencies ++= Seq(
     "com.github.lookfirst" % "sardine" % "5.7",
     "org.scalatest" %% "scalatest" % "3.0.3" % "test",

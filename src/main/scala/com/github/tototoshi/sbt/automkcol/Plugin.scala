@@ -5,7 +5,7 @@ import com.github.sardine.{SardineFactory, Sardine}
 import std.TaskStreams
 import scala.language.postfixOps
 
-object Plugin extends sbt.Plugin {
+object Plugin extends AutoPlugin {
 
   trait AutoMkcolKeys {
     lazy val autoMkcol = config("autoMkcol")
