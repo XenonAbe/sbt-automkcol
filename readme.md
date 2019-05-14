@@ -24,7 +24,7 @@ To use the plugin, add these lines to your _project/plugins.sbt_ or to the globa
 
     resolvers += "Maven Repository on Github" at "https://xenonabe.github.io/sbt-automkcol/"
 
-    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.4")
+    addSbtPlugin("com.github.xenonabe" % "sbt-automkcol" % "1.6.5")
 
 In your project's _build.sbt_
 Add to the top of your project's _build.sbt_:
