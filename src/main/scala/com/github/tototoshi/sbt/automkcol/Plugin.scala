@@ -8,7 +8,7 @@ import scala.language.postfixOps
 object Plugin extends AutoPlugin {
 
   trait AutoMkcolKeys {
-    lazy val autoMkcol = config("autoMkcol")
+    lazy val AutoMkcol = config("AutoMkcol")
     lazy val mkcol = TaskKey[Unit]("mkcol", "Make collections (folder) in remote WebDav location.")
   }
 
@@ -162,6 +162,6 @@ object Plugin extends AutoPlugin {
       publish := { publish.dependsOn(mkcol).value }
     )
 
-    val scopedSettings = inConfig(autoMkcol)(globalSettings)
+    val scopedSettings = inConfig(AutoMkcol)(globalSettings)
   }
 }
