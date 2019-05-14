@@ -4,7 +4,7 @@ organization := "com.github.xenonabe"
 
 name := "sbt-automkcol"
 
-version := "1.6.4"
+version := "1.6.5"
 
 crossSbtVersions := Seq("0.13.17", "1.2.8")
 

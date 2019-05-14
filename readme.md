@@ -146,6 +146,7 @@ The '[MKCOL][2]' command is currently the only WebDav command which is implement
 
 ## Versions
 
+*   1.6.5 Fix: id must be capitalized 
 *   1.6.4 Corresponding to multiple sbt versions
 *   1.6.0 Fix test failed. Upgrade dependency libraries
 *   1.5.1 Support 2.11.x
